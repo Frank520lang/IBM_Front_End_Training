@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+    <title>Document</title>
+    <style scoped>
+        * {
+          padding: 0;
+          margin: 0;
+        }
+
+        ul {
+          list-style: none;
+        }
+
+        ul li {
+          margin: 20px 20px;
+          padding: 10px 5px;
+          border-radius: 3px;
+        }
+
+        ul li.active {
+          background-color: #d2e2f3;
+        }
+
+        ul li h2 {
+          color: darkred;
+        }
+
+        p.active {
+          color: darkgoldenrod;
+        }
+
+        div.cover {
+          float: left;
+          border: 0px solid #000;
+          width: 90px;
+          height: 90px;
+          /* margin: 2px; */
+          border-radius: 46px;
+
+        }
+
+        </style>
+
+</head>
+<body>
+    <div id="app">
+        <div>
+            <div>
+              <h2>{{msg}}</h2>
+
+              <audio :src="currentSrc" controls autoplay ></audio>
+              <ul>
+                <li
+                  v-for="(item) in musicData"
+                  :key="item.id"
+
+                >
+                  <div  class='cover'  >
+                    <img v-bind:src="item.cover" height="100%" width="100%" />
+                  </div>
+                  <div>
+                    <h2>{{item.id}}-{{item.name}}</h2>
+                    <p >{{item.author}}</p>
+                    <p>
+
+                      <button >购买</button>
+                    </p>
+                    <p style="color:red;">价格¥：{{item.price}}</p>
+                  </div>
+                </li>
+              </ul>
+              <button>Next</button>
+            </div>
+          </div>
+
+    </div>
+    <script>
+  new Vue({
+      el:'#app',
+      data:{
+        msg: "Music Player",
+        currentSrc: "./static/on the way now.mp3",
+        musicData:[
+            {id: 1,
+            name: "HotDog - on the way now",
+            author: "HotDog",
+            songSrc: "./static/on the way now.mp3",
+            isActive: true,
+            isPublish: true,
+            price: 20,
+            cover: "./static/hotdog.jpg",
+            },
+            {id: 2,
+            name: "广东十年爱情故事",
+            author: "广东雨神",
+            songSrc: "./static/广东十年爱情故事.mp3",
+            isActive: true,
+            isPublish: true,
+            price: 30,
+            cover: "./static/wind.jpg",
+            },
+            {id: 3,
+            name: "年少有为-李荣浩",
+            author: "李荣浩",
+            songSrc: "static/年少有为-李荣浩.mp3",
+            isActive: true,
+            isPublish: true,
+            price: 40,
+            cover: "./static/young.jpg",
+            },
+            {id: 4,
+            name: "最忆是南京",
+            author: "梁峰",
+            songSrc: "static/最忆是南京.mp3",
+            isActive: true,
+            isPublish: true,
+            price: 50,
+            cover: "./static/nanjing.jpg",
+            },
+
+          ],
+      }
+  })
+    </script>
+</body>
+</html>
