@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>留言板</title>
+   <style>
+
+   </style>
+   <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.0/css/bootstrap.min.css">
+   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.0/js/bootstrap.js"></script>
+
+   <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+</head>
+
+<body>
+   <div class="container" id="box">
+      <form role="form" id="form1_info">
+         <div class="form-group">
+            <label for="username">用户名:</label>
+            <input type="text" id="username" class="form-control" placeholder="输入用户名" v-model="username">
+         </div>
+         <div class="form-group">
+            <label for="age">年　龄:</label>
+            <input type="text" id="age" class="form-control" placeholder="输入年龄" v-model="age">
+         </div>
+         <div class="form-group">
+            <input type="button" value="添加" class="btn btn-primary" v-on:click="add">
+            <input type="reset" value="重置" class="btn btn-danger">
+         </div>
+      </form>
+      <hr>
+      <table class="table table-bordered table-hover">
+         <h3 class="h3 text-info text-center">用户信息表</h3>
+         <tr class="text-danger" v-for=>
+            <th class="text-center">序号</th>
+            <th class="text-center">名字</th>
+            <th class="text-center">年龄</th>
+            <th class="text-center">操作</th>
+         </tr>
+         <tr class="text-center" v-for="(item,index) in myData">
+            <td>{{index}}</td>
+            <td>{{item.username}}</td>
+            <td>{{item.age}}</td>
+            <td>
+               <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#layer"
+                  v-on:click="nowIndex=index">删除</button>
+               <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#layer2"
+                  v-on:click="nowIndex=index,reName=item.username,reAge=item.age">修改</button>
+            </td>
+         </tr>
+         <tr v-show="myData.length!=0">
+            <td colspan="4" class="text-right">
+               <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#layer"
+                  v-on:click="nowIndex=-2">删除全部</button>
+            </td>
+         </tr>
+         <tr v-show="myData.length==0">
+            <td colspan="4" class="text-center text-muted">
+               <p>暂无数据....</p>
+            </td>
+         </tr>
+      </table>
+
+      <!--确认删除时的模态框 弹出框-->
+      <div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h4 class="modal-title">确认删除么?</h4>
+                  <button type="button" class="close" data-dismiss="modal">
+                     <span>×</span>
+                  </button>
+
+               </div>
+               <div class="modal-body text-right">
+                  <button data-dismiss="modal" class="btn btn-primary btn-sm">取消</button>
+                  <button data-dismiss="modal" class="btn btn-danger btn-sm"
+                     v-on:click="deleteByIndex(nowIndex)">确认</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--修改时的模态框 弹出框-->
+      <div role="dialog" class="modal fade bs-example-modal-sm" id="layer2">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <!-- <h4 class="modal-title">确认修改么?</h4> -->
+                  <!-- <button type="button" class="close" data-dismiss="modal">
+               <span>×</span>
+            </button> -->
+                  <div class="form-group">
+                     <label for="username1">用户名:</label>
+                     <input type="text" id="reName" class="form-control" placeholder="reName" v-model="reName">
+                  </div>
+                  <div class="form-group">
+                     <label for="age1">年　龄:</label>
+                     <input type="text" id="reAge" class="form-control" placeholder="reAge" v-model="reAge">
+                  </div>
+               </div>
+               <div class="modal-body text-right">
+                  <button data-dismiss="modal" class="btn btn-primary btn-sm">取消</button>
+                  <button data-dismiss="modal" class="btn btn-danger btn-sm"
+                     v-on:click="change(nowIndex,reName,reAge)">修改</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+
+   <script>
+      var vm = new Vue({
+         el: '#box',
+         data: {
+            username: '',
+            age: '',
+            reName: '',
+            reAge: '',
+            myData: [],
+            nowIndex: 0,
+         },
+         methods: {
+            add: function () {
+               //console.log("add");
+               this.myData.push({
+                  username: this.username,
+                  age: this.age,
+               });
+
+            },
+
+            deleteByIndex: function (index) {
+               //console.log("delete");
+               if (index == -2) {
+                  this.myData = [];
+               } else {
+                  this.myData.splice(index, 1);
+               }
+            },
+
+            change: function (index, reName, reAge) {
+
+               //vm.$set( target, propertyName/index, value )
+
+               //  {Object | Array} target
+               //  {string | number} propertyName/index
+               //  {any} value
+
+               vm.$set(this.myData, index, {
+                  username: reName,
+                  age: reAge
+               })
+            }
+         },
+
+
+      })
+   </script>
+
+</body>
+
+</html>
